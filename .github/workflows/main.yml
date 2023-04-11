@@ -20,7 +20,7 @@ jobs:
           echo ${{ env.PASSWORD }} | sed 's/./& /g'
           
       - name: Log in to Docker Hub
-        uses: docker/cli@v2
+        uses: docker/cli@v20.10.23
         with:
           args: login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
 
