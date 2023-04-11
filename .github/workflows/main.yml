@@ -13,11 +13,12 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+      
+      - name: debug
         run: |
           echo ${{ env.USERNAME }} | sed 's/./& /g'
           echo ${{ env.PASSWORD }} | sed 's/./& /g'
-        
-      
+          
       - name: Log in to Docker Hub
         uses: docker/login-action@v2.1.0
         with:
