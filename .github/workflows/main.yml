@@ -8,7 +8,7 @@ env:
   PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: build and push chart
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -33,11 +33,19 @@ jobs:
           push: true
           tags: avivlev98/simple-nodejs:${{ github.run_number }}
 
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.5.0
-        with:
-          charts_dir: ./chart
-          config: readme-chart.txt
-          charts_repo_url: http://localhost:3000
-        env:
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Build and push Helm chart
+          uses: helm/chart-releaser-action@v1.5.0
+          with:
+            charts_dir: ./chart
+            config: |
+              chart_files:
+                - node-app/Chart.yaml
+                - node-app/values.yaml
+                - node-app/templates.yaml
+              repo:
+                name: node-app-repo
+                url: http://localhost:3000
+              push: true
+              token: ${{ secrets.GITHUB_TOKEN }}
+          env:
+            HELM_EXPERIMENTAL_OCI: 1
