@@ -6,6 +6,7 @@ on:
 env:
   USERNAME: ${{ secrets.DOCKER_USER }}
   PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  
 jobs:
   push_to_registry:
     name: build and push chart
@@ -46,6 +47,6 @@ jobs:
               name: node-app-repo
               url: http://localhost:3000
             push: true
-            token: ${{ secrets.GITHUB_TOKEN }}
         env:
           HELM_EXPERIMENTAL_OCI: 1
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
