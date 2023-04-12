@@ -1,4 +1,4 @@
-name: Publish Docker image
+name: CI/CD helm
 
 on:
   push:
@@ -36,11 +36,12 @@ jobs:
       - name: Build and release Helm chart
         uses: helm/chart-releaser-action@v1.2.1
         with:
-          chart_path: ./chart
+          charts_dir: ./chart
           chart_name: node-app
-          chart_version: ${{ github.run_number }}
-          chart_repo: http://localhost:3000
-          chart_files: |
-            readme-chart.txt
+          version: ${{ github.run_number }}
+          charts_repo_url: http://localhost:3000
+          config: |
+            chart_files:
+              - readme-chart.txt
           github_token: ${{ secrets.GITHUB_TOKEN }}
           chart_create_pr: false
