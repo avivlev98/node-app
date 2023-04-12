@@ -33,15 +33,11 @@ jobs:
           push: true
           tags: avivlev98/simple-nodejs:${{ github.run_number }}
 
-      - name: Build and release Helm chart
-        uses: helm/chart-releaser-action@v1.2.1
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.5.0
         with:
           charts_dir: ./chart
-          chart_name: node-app
-          version: ${{ github.run_number }}
+          config: readme-chart.txt
           charts_repo_url: http://localhost:3000
-          config: |
-            chart_files:
-              - readme-chart.txt
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          chart_create_pr: false
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
