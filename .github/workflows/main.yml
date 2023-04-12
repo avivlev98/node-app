@@ -35,8 +35,8 @@ jobs:
           tags: avivlev98/simple-nodejs:${{ github.run_number }}
 
       - name: Build Helm chart
-          run: |
-            helm create node-app
+        run: |
+          helm create node-app
 
       - name: Update chart in repository
         uses: helm/chart-releaser-action@v1.5.0
