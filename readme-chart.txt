@@ -1,0 +1,1 @@
+you can add more files to the chart (templates etc..) like me 
