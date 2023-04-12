@@ -6,7 +6,7 @@ on:
 env:
   USERNAME: ${{ secrets.DOCKER_USER }}
   PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  
+
 jobs:
   push_to_registry:
     name: build and push chart
@@ -34,7 +34,11 @@ jobs:
           push: true
           tags: avivlev98/simple-nodejs:${{ github.run_number }}
 
-      - name: Build and push Helm chart
+     - name: Build Helm chart
+        run: |
+          helm create node-app
+
+      - name: Update chart in repository
         uses: helm/chart-releaser-action@v1.5.0
         with:
           charts_dir: ./chart
@@ -42,11 +46,11 @@ jobs:
             chart_files:
               - node-app/Chart.yaml
               - node-app/values.yaml
-              - node-app/templates.yaml
+              - node-app/templates/*.yaml
             repo:
               name: node-app-repo
               url: http://localhost:3000
-            push: true
+            update: true
         env:
           HELM_EXPERIMENTAL_OCI: 1
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
