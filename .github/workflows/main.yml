@@ -33,22 +33,10 @@ jobs:
           context: .
           push: true
           tags: avivlev98/simple-nodejs:${{ github.run_number }}
-          
-      - name: Create and push Helm chart
-        uses: helm/kustomize-action@v1.0.0
-        with:
-          kustomization: .
-          release: node-app-chart
-          chart-name: node-app-chart
-          chart-version: 0.1.0
-          chart-path: charts
-          chart-repo: https://github.com/avivlev98/helm-charts
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Build Helm chart
-      #   run: |
-      #     helm create node-app-chart
+      - name: Build Helm chart
+        run: |
+          helm create node-app-chart
 
       # - name: Update chart in repository
       #   uses: helm/chart-releaser-action@v1.5.0
