@@ -36,21 +36,21 @@ jobs:
 
       - name: Build Helm chart
         run: |
-          helm create node-app
+          helm create node-app-chart
 
-      - name: Update chart in repository
-        uses: helm/chart-releaser-action@v1.5.0
-        with:
-          charts_dir: ./chart
-          config: |
-            chart_files:
-              - node-app/Chart.yaml
-              - node-app/values.yaml
-              - node-app/templates/*.yaml
-            repo:
-              name: node-app-repo
-              url: http://localhost:3000
-            update: true
-        env:
-          HELM_EXPERIMENTAL_OCI: 1
-          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      # - name: Update chart in repository
+      #   uses: helm/chart-releaser-action@v1.5.0
+      #   with:
+      #     charts_dir: ./chart
+      #     config: |
+      #       chart_files:
+      #         - node-app/Chart.yaml
+      #         - node-app/values.yaml
+      #         - node-app/templates/*.yaml
+      #       repo:
+      #         name: node-app-repo
+      #         url: http://localhost:3000
+      #       update: true
+      #   env:
+      #     HELM_EXPERIMENTAL_OCI: 1
+      #     CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
